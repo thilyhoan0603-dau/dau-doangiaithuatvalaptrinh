@@ -1,13 +1,23 @@
 class Solution:
-    def removeDuplicates(self, nums):
-        if len(nums) == 0:
-            return 0
+    def reverseKGroup(self, head, k):
+        dummy = ListNode(0)
+        dummy.next = head
+        prev = dummy
 
-        i = 0
+        while True:
+            node = prev
+            for i in range(k):
+                node = node.next
+                if not node:
+                    return dummy.next
 
-        for j in range(1, len(nums)):
-            if nums[j] != nums[i]:
-                i += 1
-                nums[i] = nums[j]
+            tail = prev.next
+            curr = tail.next
 
-        return i + 1
+            for i in range(k-1):
+                tail.next = curr.next
+                curr.next = prev.next
+                prev.next = curr
+                curr = tail.next
+
+            prev = tail
